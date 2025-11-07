@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classificação Final - Torneio FC26</title>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/brackets.css">
+
+  <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/brackets.js"></script>
+</head>
+
+<body class="brackets-page">
+  <header>
+    <h1>Playoffs</h1>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="inscritos.html">Inscritos</a>
+      <a href="matches.html">Jogos</a>
+      <a href="classificacao.html">Classificação</a>
+    </nav>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </header>
+
+  <main>
+    <h2>Eliminatórias</h2>
+
+    <div class="controls">
+      <button id="adminLoginBrackets">Entrar como Admin</button>
+      <button id="gerarBrackets">Gerar Brackets Automaticamente</button>
+      <button id="resetTorneio" class="danger">Resetar Torneio</button>
+      <p id="adminMsgBrackets"></p>
+    </div>
+
+    <div id="brackets" class="tournament-bracket"></div>
+  </main>
+
+  <dialog id="resultDialog">
+    <form method="dialog" id="resultForm">
+      <h3>Editar Resultado</h3>
+      <p id="matchNames"></p>
+      <input type="text" id="newResult" placeholder="Ex: 2-1" required>
+      <div class="dialog-buttons">
+        <button value="cancel">Cancelar</button>
+        <button id="saveResultBtn" value="confirm">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="socials">
+    <p>Socials</p>
+    <div class="icons">
+      <a href="https://www.twitch.tv/dannypires710" target="_blank"><img src="assets/img/twitch.png"></a>
+      <a href="https://www.instagram.com/dannypires710/" target="_blank"><img src="assets/img/insta.png"></a>
+      <a href="https://discord.gg/WCGhjnrn" target="_blank"><img src="assets/img/disc.png"></a>
+    </div>
+  </div>
+</body>
+</html>

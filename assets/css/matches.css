@@ -1,0 +1,234 @@
+/* ---------- BASE E LAYOUT PRINCIPAL ---------- */
+body.matches-page {
+  background: linear-gradient(135deg, #e9eef5 0%, #f9fbfd 100%);
+  color: var(--text-color, #111);
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body.matches-page .theme-btn {
+  position: relative;
+  top: auto;
+  margin-left: 45px;
+  background: none;
+}
+
+main {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px;
+  background: var(--content-bg, #fff);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+main h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--title-color, #111);
+  margin-bottom: 35px;
+  text-align: left;
+}
+
+/* ---------- CONTROLOS / BOTÕES ---------- */
+.controls {
+  background: rgba(0, 123, 255, 0.05);
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 35px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.15s ease-in-out;
+  font-weight: 500;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+button.logout-admin {
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+/* ---------- LISTA DE JORNADAS ---------- */
+.matches-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.jornada {
+  background: var(--content-bg, #fff);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.jornada h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: var(--title-color, #111);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+button#adminLogin {
+  background-color: #facc15; /* amarelo */
+  color: #000;
+}
+
+button#limparResultados {
+  background-color: #d55c00; /* vermelho */
+}
+
+button#fecharEpoca {
+  background-color: #1d9c00; /* azul */
+}
+
+
+/* ---------- DARK MODE Jornada---------- */
+body.dark-mode .jornada h3 {
+  color: #4da3ff;
+}
+
+
+/* ---------- CARTÕES DOS JOGOS ---------- */
+.match-card {
+  background: var(--content-bg, #fff);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.match-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.match-card .names {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+}
+
+.match-card .score {
+  font-size: 1.2rem;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.match-card.finished {
+  background: #e8f9e8;
+}
+
+.match-card.pending {
+  opacity: 0.9;
+}
+
+/* ---------- BOTÕES DE EDIÇÃO ---------- */
+.match-card button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.match-card button:hover {
+  background: #0056b3;
+}
+
+/* ---------- MODAL ---------- */
+dialog {
+  border: none;
+  border-radius: 10px;
+  padding: 20px 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  background: #fff;
+  color: #111;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode.matches-page {
+  background: linear-gradient(135deg, #0e0e0e 0%, #1a1a1a 100%);
+  color: #eee;
+}
+
+body.dark-mode main {
+  background: #1e1e1e;
+  color: #ddd;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode main h2 {
+  color: #f1f1f1;
+}
+
+body.dark-mode .jornada {
+  background: #1e1e1e;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .match-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #eee;
+}
+
+body.dark-mode .match-card.finished {
+  background: rgba(0, 255, 0, 0.08);
+}
+
+body.dark-mode button {
+  background-color: #0056b3;
+}
+
+body.dark-mode button:hover {
+  background-color: #007bff;
+}
+
+body.dark-mode button.logout-admin {
+  background-color: #a71d2a !important;
+}
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width: 700px) {
+  .controls {
+    flex-direction: column;
+    text-align: center;
+  }
+}

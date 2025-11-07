@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/matches", "destination": "/matches.html" },
+    { "source": "/classificacao", "destination": "/classificacao.html" },
+    { "source": "/inscritos", "destination": "/inscritos.html" },
+    { "source": "/brackets", "destination": "/brackets.html" }
+  ]
+}

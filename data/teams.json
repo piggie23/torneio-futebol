@@ -1,0 +1,50 @@
+{
+  "Premier League (ENG)": [
+    "Arsenal","Aston Villa","AFC Bournemouth","Brentford","Brighton & Hove Albion",
+    "Chelsea","Crystal Palace","Everton","Fulham","Ipswich Town","Leicester City",
+    "Liverpool","Manchester City","Manchester United","Newcastle United",
+    "Nottingham Forest","Southampton","Tottenham Hotspur","West Ham United",
+    "Wolverhampton Wanderers"
+  ],
+  "LaLiga (ESP)": [
+    "Athletic Club","Atlético de Madrid","FC Barcelona","Real Madrid","Real Sociedad",
+    "Real Betis","Villarreal","Valencia","Sevilla","Girona","Osasuna","Getafe",
+    "Rayo Vallecano","Celta de Vigo","UD Las Palmas","RCD Mallorca","Deportivo Alavés",
+    "CD Leganés","Real Valladolid","RCD Espanyol"
+  ],
+  "Serie A (ITA)": [
+    "Atalanta","Bologna","Cagliari","Como","Empoli","Fiorentina","Genoa",
+    "Hellas Verona","Inter","Juventus","Lazio","Lecce","AC Milan","Monza",
+    "Napoli","Parma","Roma","Torino","Udinese","Venezia"
+  ],
+  "Bundesliga (GER)": [
+    "FC Augsburg","Bayer Leverkusen","Bayern München","Borussia Dortmund",
+    "Borussia Mönchengladbach","Eintracht Frankfurt","SC Freiburg","TSG Hoffenheim",
+    "1. FC Heidenheim","1. FSV Mainz 05","RB Leipzig","Union Berlin","VfB Stuttgart",
+    "VfL Bochum","VfL Wolfsburg","SV Werder Bremen","FC St. Pauli","Holstein Kiel"
+  ],
+  "Ligue 1 (FRA)": [
+    "Paris Saint-Germain","AS Monaco","Brest","Lille","Nice","Lyon","Marseille",
+    "Rennes","Reims","Lens","Montpellier","Toulouse","Nantes","Strasbourg",
+    "Le Havre","Auxerre","Angers","Saint-Étienne"
+  ],
+  "Liga Portugal (POR)": [
+    "Sporting CP","SL Benfica","FC Porto","SC Braga","Vitória SC","Moreirense",
+    "Arouca","Famalicão","Casa Pia","Estoril Praia","Boavista","Rio Ave",
+    "Farense","Gil Vicente","Portimonense","Santa Clara","Nacional","Estrela da Amadora"
+  ],
+  "Eredivisie (NED)": [
+    "Ajax","PSV","Feyenoord","AZ Alkmaar","Twente","Utrecht","Heerenveen",
+    "Vitesse","NEC Nijmegen","Sparta Rotterdam","RKC Waalwijk","Go Ahead Eagles",
+    "PEC Zwolle","Heracles Almelo","Fortuna Sittard","Almere City","Willem II","FC Groningen"
+  ],
+  "MLS (USA/CAN)": [
+    "Atlanta United","Austin FC","CF Montréal","Charlotte FC","Chicago Fire",
+    "FC Cincinnati","Colorado Rapids","Columbus Crew","DC United","FC Dallas",
+    "Houston Dynamo","Inter Miami","LA Galaxy","Los Angeles FC","Minnesota United",
+    "Nashville SC","New England Revolution","New York City FC","New York Red Bulls",
+    "Orlando City","Philadelphia Union","Portland Timbers","Real Salt Lake",
+    "San Jose Earthquakes","Seattle Sounders","Sporting Kansas City",
+    "St. Louis City SC","Toronto FC","Vancouver Whitecaps"
+  ]
+}

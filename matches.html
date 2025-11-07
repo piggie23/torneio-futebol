@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogos da Fase Regular - Torneio FC26</title>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/matches.css">
+
+  <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/matches.js"></script>
+</head>
+
+<body class="matches-page">
+  <header>
+    <h1>Fase Regular</h1>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="inscritos.html">Inscritos</a>
+      <a href="classificacao.html">Classificação</a>
+      <a href="brackets.html">Playoffs</a>
+    </nav>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </header>
+
+  <main>
+    <h2>Jogos da Fase Regular</h2>
+
+    <div class="controls">
+      <button id="gerarMatches">Gerar Jogos</button>
+      <button id="adminLogin">Entrar como Admin</button>
+      <button id="limparResultados" class="danger">Limpar Resultados</button>
+      <button id="fecharEpoca" class="danger">Terminar Época Regular</button>
+      <p id="adminMsg"></p>
+    </div>
+
+    <div id="matchesContainer" class="matches-list"></div>
+  </main>
+
+  <dialog id="resultDialog">
+    <form method="dialog" id="resultForm">
+      <h3>Editar Resultado</h3>
+      <p id="matchNames"></p>
+      <input type="number" id="homeScore" min="0" required> -
+      <input type="number" id="awayScore" min="0" required>
+      <div class="dialog-buttons">
+        <button value="cancel">Cancelar</button>
+        <button id="saveResultBtn" value="confirm">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="socials">
+    <p>Socials</p>
+    <div class="icons">
+      <a href="https://www.twitch.tv/dannypires710" target="_blank"><img src="assets/img/twitch.png"></a>
+      <a href="https://www.instagram.com/dannypires710/" target="_blank"><img src="assets/img/insta.png"></a>
+      <a href="https://discord.gg/WCGhjnrn" target="_blank"><img src="assets/img/disc.png"></a>
+    </div>
+  </div>
+</body>
+</html>

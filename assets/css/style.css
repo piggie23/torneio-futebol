@@ -1,0 +1,323 @@
+/* ---------- RESET ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  background: #fff; /* mantém fundo branco por padrão */
+}
+
+/* ---------- HEADER ---------- */
+header {
+  background: var(--header-bg, #f8f9fa);
+  color: var(--text-color, #111);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 60px;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Logo e título */
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+header h1 img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Navegação centralizada */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 35px;
+  flex: 1;
+}
+
+nav a {
+  color: var(--text-color, #111);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #007bff;
+  transition: width 0.25s;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+nav a.active {
+  color: var(--text-color, #111);
+  font-size: 1.1rem;
+  border-bottom: 2px solid #000000;
+  opacity: 0.3;         
+  cursor: default;          
+  pointer-events: none;
+  font-weight: 500;      
+}
+
+/* Botão do modo claro/escuro */
+.theme-btn {
+  background: none;
+  border: none;
+  color: var(--text-color, #111);
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  position: relative;
+  top: -7.5px; 
+  transition: background 0.3s, transform 0.2s;
+  flex-shrink: 0;
+  margin-left: 45px;
+}
+
+
+.theme-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: rotate(-15deg);
+}
+
+/* ---------- DARK MODE ---------- */
+.dark-mode header {
+  --header-bg: #000;
+  color: #fff;
+}
+
+.dark-mode nav a {
+  color: #ddd;
+}
+
+.dark-mode nav a::after {
+  background: #4da3ff;
+}
+
+.dark-mode .theme-btn {
+  color: #ffd966;
+}
+
+.dark-mode .theme-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- LANDING PAGE ---------- */
+.hero {
+  position: relative;
+  height: calc(100vh - 60px);
+  background: url("../img/stream.png") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--text-color, #111);
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 0.4s ease;
+}
+
+.dark-mode .hero::after {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  color: inherit;
+}
+
+.hero h2 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+}
+
+.hero button {
+  background: var(--btn-bg, #007bff);
+  color: var(--btn-text, white);
+  border: none;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero button:hover {
+  background: var(--btn-hover, #0056b3);
+}
+
+/* ---------- MODAL FORM ---------- */
+dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  border: none;
+  border-radius: 10px;
+  max-width: 450px;
+  padding: 25px 30px;
+  background: #fff;
+  color: #111;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- MODO CLARO (padrão) ---------- */
+body {
+  --bg-color: #f8f9fa;
+  --text-color: #111;
+  --btn-bg: #007bff;
+  --btn-hover: #0056b3;
+  --btn-text: #fff;
+  --dialog-bg: #fff;
+  --dialog-text: #111;
+}
+
+header {
+  background: #f8f9fa;
+  color: #111;
+}
+
+nav a {
+  color: #111;
+}
+
+nav a:hover {
+  color: #007bff;
+}
+
+.theme-btn {
+  color: #111;
+}
+
+/* ---------- MODO ESCURO ---------- */
+.dark-mode {
+  --bg-color: #121212;
+  --text-color: #fff;
+  --btn-bg: #0056b3;
+  --btn-hover: #007bff;
+  --btn-text: #fff;
+  --dialog-bg: #1e1e1e;
+  --dialog-text: #eee;
+}
+
+.dark-mode body {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.dark-mode header {
+  background: #000;
+  color: white;
+}
+
+.dark-mode nav a {
+  color: #ddd;
+}
+
+.dark-mode nav a:hover {
+  color: #4da3ff;
+}
+
+.dark-mode .theme-btn {
+  color: #ffd966;
+}
+
+h3 {
+  margin-top: 20px; 
+}
+
+
+/* ---------- SOCIAL ICONS ---------- */
+.socials {
+  position: fixed;
+  bottom: 20px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 150;
+}
+
+.socials p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.socials .icons {
+  display: flex;
+  gap: 12px;
+}
+
+.socials .icons img {
+  width: 28px;
+  height: 28px;
+  opacity: 0.85;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.socials .icons img:hover {
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+body.dark-mode .socials p {
+  color: #ddd;
+}

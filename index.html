@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interfreguesias do Estamine</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/form.css">
+
+  <!-- JS -->
+  <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/form.js"></script>
+</head>
+
+<body class="home-page">
+  <header>
+    <h1>Interfreguesias do Estamine</h1>
+    <nav>
+      <a href="inscritos.html">Inscritos</a>
+      <a href="matches.html">Jogos</a>
+      <a href="classificacao.html">Classificação</a>
+      <a href="brackets.html">Playoffs</a>
+    </nav>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </header>
+
+  <main class="hero">
+    <div class="hero-content">
+      <h2>Torneio FC26 Do Estamine ⚽</h2>
+      <p>Mostra que és o melhor do Estamine!</p>
+      <button id="openForm" class="cta-btn">Inscrever-me</button>
+    </div>
+  </main>
+
+  <!-- FORMULÁRIO -->
+  <dialog id="formDialog">
+    <form id="formInscricao" method="dialog">
+      <h2>Inscreve-te no torneio!</h2>
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" required>
+
+      <label for="plataforma">Plataforma:</label>
+      <select id="plataforma" required>
+        <option value="">Seleciona...</option>
+        <option value="PC">PC</option>
+        <option value="PlayStation">PlayStation</option>
+        <option value="Xbox">Xbox</option>
+      </select>
+
+      <label for="liga">Liga:</label>
+      <select id="liga" required></select>
+
+      <label for="equipa">Equipa:</label>
+      <select id="equipa" required></select>
+
+      <p id="equipaAviso" style="margin-top:8px;font-size:0.9rem;color:#d9534f;display:none;">
+        ⚠️ Esta equipa já foi escolhida por outro participante.
+      </p>
+
+      <h3>Disponibilidade para jogar</h3>
+      <p>Seleciona os dias e horas em que podes jogar:</p>
+
+      <div class="dias-disponiveis">
+        <label><input type="checkbox" name="dias" value="Segunda"> Segunda</label>
+        <label><input type="checkbox" name="dias" value="Terça"> Terça</label>
+        <label><input type="checkbox" name="dias" value="Quarta"> Quarta</label>
+        <label><input type="checkbox" name="dias" value="Quinta"> Quinta</label>
+        <label><input type="checkbox" name="dias" value="Sexta"> Sexta</label>
+        <label><input type="checkbox" name="dias" value="Sábado"> Sábado</label>
+        <label><input type="checkbox" name="dias" value="Domingo"> Domingo</label>
+      </div>
+
+      <div class="horas-disponiveis">
+        <label>De: <select id="horaInicio"></select></label>
+        <label>Até: <select id="horaFim"></select></label>
+      </div>
+
+      <button type="submit" class="enviar-btn">Enviar Inscrição</button>
+      <p id="mensagem"></p>
+    </form>
+  </dialog>
+
+  <!-- SOCIAL ICONS -->
+  <div class="socials">
+    <p>Socials</p>
+    <div class="icons">
+      <a href="https://www.twitch.tv/dannypires710" target="_blank"><img src="assets/img/twitch.png" alt="Twitch"></a>
+      <a href="https://www.instagram.com/dannypires710/" target="_blank"><img src="assets/img/insta.png" alt="Instagram"></a>
+      <a href="https://discord.gg/WCGhjnrn" target="_blank"><img src="assets/img/disc.png" alt="Discord"></a>
+    </div>
+  </div>
+</body>
+</html>

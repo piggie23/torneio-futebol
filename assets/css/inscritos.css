@@ -1,0 +1,142 @@
+body.inscritos-page {
+  background: linear-gradient(135deg, #e9eef5 0%, #f9fbfd 100%);
+  color: var(--text-color, #111);
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body.inscritos-page .theme-btn {
+  position: relative;
+  top: auto;
+  margin-left: 45px;
+  background: none; 
+}
+
+main {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--content-bg, #fff);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  text-align: center;
+  color: var(--title-color, #111);
+}
+
+h3 {
+  font-size: 1.4rem;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: 500;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.95rem;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+th {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 600;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+tr:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode.inscritos-page {
+  background: linear-gradient(135deg, #0e0e0e 0%, #1a1a1a 100%);
+  color: #eee;
+}
+
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #eee;
+  --content-bg: #1e1e1e;
+  --title-color: #f1f1f1;   /* <- isto faz o h2 mudar */
+}
+
+body.dark-mode main {
+  background: #1e1e1e;
+  color: #ddd;
+}
+
+body.dark-mode th {
+  background-color: #0056b3;
+}
+body.dark-mode tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+body.dark-mode tr:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+  transition: background 0.2s ease;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- ADMIN MODE ---------- */
+.adminOnly {
+  display: none; /* Esconde por padrão */
+}
+
+body.admin-mode .adminOnly {
+  display: table-cell; /* Mostra só quando admin estiver ativo */
+}
+
+/* ---------- MODO ADMIN ATIVO ---------- */
+
+button#adminLogin {
+  background-color: #facc15; /* amarelo */
+  color: #000;
+}
+
+#adminLogin.logout-admin {
+  background-color: #dc3545 !important; /* vermelho */
+  color: #fff;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#adminLogin.logout-admin:hover {
+  background-color: #b02a37 !important;
+  transform: scale(1.05);
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscritos - Torneio FC26</title>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/inscritos.css">
+
+  <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/inscritos.js"></script>
+</head>
+
+<body class="inscritos-page">
+  <header>
+    <h1>Inscritos</h1>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="matches.html">Jogos</a>
+      <a href="classificacao.html">Classificação</a>
+      <a href="brackets.html">Playoffs</a>
+    </nav>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </header>
+
+  <main>
+    <h2>Lista de Participantes</h2>
+
+    <button id="adminLogin">Entrar como Admin</button>
+    <p id="adminMsg" style="margin-top: 10px;"></p>
+
+    <table id="tabelaInscritos">
+      <thead>
+        <tr>
+          <th>Jogador</th>
+          <th>Plataforma</th>
+          <th>Equipa</th>
+          <th>Dias Disponíveis</th>
+          <th>Horário</th>
+          <th class="adminOnly">Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+
+  <div class="socials">
+    <p>Socials</p>
+    <div class="icons">
+      <a href="https://www.twitch.tv/dannypires710" target="_blank"><img src="assets/img/twitch.png"></a>
+      <a href="https://www.instagram.com/dannypires710/" target="_blank"><img src="assets/img/insta.png"></a>
+      <a href="https://discord.gg/WCGhjnrn" target="_blank"><img src="assets/img/disc.png"></a>
+    </div>
+  </div>
+</body>
+</html>
