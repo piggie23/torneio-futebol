@@ -8,14 +8,16 @@ import {
   setupThemeToggle,
   getTournamentState,
   computeRanking,
+  setupRoleDropdown,
+  isAdmin
 } from "./main.js";
 
 setupThemeToggle();
+setupRoleDropdown();
+
 
 document.addEventListener("DOMContentLoaded", async () => {
   const btnGerar = document.getElementById("gerarBrackets");
-  const btnAdmin = document.getElementById("adminLoginBrackets");
-  const msgAdmin = document.getElementById("adminMsgBrackets");
   const dialog = document.getElementById("resultDialog");
   const formDialog = document.getElementById("resultForm");
   const inputRes = document.getElementById("newResult");
@@ -24,7 +26,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const btnReset = document.getElementById("resetTorneio");
   const controls = document.querySelector(".controls");
 
-  let isAdmin = false;
   let editingMatch = null;
   let bracketsData = { rounds: [] };
 
@@ -112,52 +113,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     return; // Sai do script — não carrega brackets nem botões
   }
 
-  // ---------- LOGIN ADMIN ----------
-  btnAdmin?.addEventListener("click", async () => {
-    if (isAdmin) {
-      isAdmin = false;
-      document.body.classList.remove("admin-mode");
-      msgAdmin.textContent = "Modo administrador desativado.";
-      btnAdmin.textContent = "Entrar como Admin";
-      btnAdmin.classList.remove("logout-admin");
-      renderBrackets();
-      return;
-    }
-
-    const pwd = prompt("Password de administrador:");
-    if (pwd === "admin123") {
-      isAdmin = true;
-      document.body.classList.add("admin-mode");
-      msgAdmin.textContent = "Modo administrador ativo ✅";
-      btnAdmin.textContent = "Sair do modo Admin";
-      btnAdmin.classList.add("logout-admin");
-      renderBrackets();
-    } else {
-      alert("Password incorreta ❌");
-    }
-  });
-
-  // ---------- ATALHO (Ctrl + A) ----------
-  document.addEventListener("keydown", async (e) => {
-    if (e.ctrlKey && e.key.toLowerCase() === "a") {
-      const pwd = prompt("Password de administrador:");
-      if (pwd === "admin123") {
-        isAdmin = true;
-        document.body.classList.add("admin-mode");
-        msgAdmin.textContent = "Modo administrador ativado ✅";
-        btnAdmin.textContent = "Sair do modo Admin";
-        btnAdmin.classList.add("logout-admin");
-        renderBrackets(); // Atualiza a página dos brackets no modo admin
-      } else {
-        alert("Password incorreta ❌");
-      }
-    }
-  });
-
-
   // ---------- RESET BRACKETS ----------
   btnReset?.addEventListener("click", async () => {
-    if (!isAdmin) return alert("Apenas o admin pode resetar.");
+    if (!isAdmin()) return alert("Apenas o admin pode resetar.");
     if (!confirm("⚠️ Tens a certeza que queres resetar os brackets?")) return;
 
     const { data: existing } = await supabase
@@ -175,7 +133,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // ---------- GERAR BRACKETS ----------
   btnGerar?.addEventListener("click", async () => {
-    if (!isAdmin) return alert("Apenas o admin pode gerar os brackets.");
+    if (!isAdmin()) return alert("Apenas o admin pode gerar os brackets.");
 
     const inscritos = await getInscritos();
     if (!inscritos || inscritos.length < 2) {
@@ -246,11 +204,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderBrackets();
   }
 
+  await loadBrackets();
+
+  // ---------- SUBSCRIÇÃO REALTIME ----------
   supabase
     .channel("brackets-live")
-    .on("postgres_changes", { event: "*", schema: "public", table: "brackets" }, () => {
-      loadBrackets();
-    })
+    .on("postgres_changes", { event: "*", schema: "public", table: "brackets" }, loadBrackets)
     .subscribe();
 
   // ---------- FUNÇÕES AUXILIARES ----------
@@ -347,7 +306,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         if (
-          isAdmin &&
+          isAdmin() &&
           match.j1 !== "A aguardar" &&
           match.j2 !== "A aguardar" &&
           match.j2 !== "BYE"

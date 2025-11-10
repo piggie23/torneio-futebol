@@ -1,5 +1,8 @@
-import { supabase, getInscritos, updateStats, setupThemeToggle, setTournamentState, getTournamentState, lockPlayoffsNavUntilFinished } from "./main.js";
+import { supabase, getInscritos, updateStats, setTournamentState, getTournamentState, lockPlayoffsNavUntilFinished } from "./main.js";
+import { setupThemeToggle, setupRoleDropdown, isAdmin } from "./main.js";
+
 setupThemeToggle();
+setupRoleDropdown();
 lockPlayoffsNavUntilFinished();
 
 
@@ -18,61 +21,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const container = document.getElementById("matchesContainer");
   const gerarBtn = document.getElementById("gerarMatches");
-  const adminBtn = document.getElementById("adminLogin");
-  const adminMsg = document.getElementById("adminMsg");
   const dialog = document.getElementById("resultDialog");
   const homeInput = document.getElementById("homeScore");
   const awayInput = document.getElementById("awayScore");
   let selectedMatch = null;
-  let isAdmin = false;
-
-  // ---------- LOGIN ADMIN ----------
-  adminBtn.addEventListener("click", async () => {
-    if (isAdmin) {
-      isAdmin = false;
-      document.body.classList.remove("admin-mode");
-      adminMsg.textContent = "Modo administrador desativado.";
-      adminBtn.textContent = "Entrar como Admin";
-      adminBtn.classList.remove("logout-admin");
-      renderMatches();
-      return;
-    }
-
-    const pwd = prompt("Password de administrador:");
-    if (pwd === "admin123") {
-      isAdmin = true;
-      document.body.classList.add("admin-mode");
-      adminMsg.textContent = "Modo administrador ativado ✅";
-      adminBtn.textContent = "Sair do modo Admin";
-      adminBtn.classList.add("logout-admin");
-      renderMatches();
-    } else {
-      alert("Password incorreta ❌");
-    }
-  });
-
-  // ---------- ATALHO (Ctrl + A) ----------
-  document.addEventListener("keydown", async (e) => {
-    if (e.ctrlKey && e.key.toLowerCase() === "a") {
-      const pwd = prompt("Password de administrador:");
-      if (pwd === "admin123") {
-        isAdmin = true;
-        document.body.classList.add("admin-mode");
-        adminMsg.textContent = "Modo administrador ativado ✅";
-        adminBtn.textContent = "Sair do modo Admin";
-        adminBtn.classList.add("logout-admin");
-        await renderMatches();
-      } else {
-        alert("Password incorreta ❌");
-      }
-    }
-  });
 
 
   // ---------- TERMINAR ÉPOCA REGULAR ----------
   const fecharBtn = document.getElementById("fecharEpoca");
   fecharBtn.addEventListener("click", async () => {
-    if (!isAdmin) return alert("Apenas o admin pode terminar a época regular.");
+    if (!isAdmin()) return alert("Apenas o admin pode terminar a época regular.");
     const ok = confirm("⚠️ Queres mesmo terminar a época regular? Isto vai ativar os Playoffs.");
     if (!ok) return;
 
@@ -84,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // ---------- GERAR JOGOS ----------
   gerarBtn.addEventListener("click", async () => {
-    if (!isAdmin) return alert("Apenas o admin pode gerar jogos.");
+    if (!isAdmin()) return alert("Apenas o admin pode gerar jogos.");
 
     const inscritos = await getInscritos();
     if (inscritos.length < 2) return alert("Precisas de pelo menos 2 jogadores.");
@@ -194,7 +152,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <span class="score">${m.homeScore ?? "-"} - ${m.awayScore ?? "-"}</span>
             <span>${m.away}</span>
           </div>
-          ${isAdmin ? `<button class="edit" data-id="${m.id}">✏️</button>` : ""}
+          ${isAdmin() ? `<button class="edit" data-id="${m.id}">✏️</button>` : ""}
         `;
         sec.appendChild(card);
       });
@@ -221,7 +179,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const limparBtn = document.getElementById("limparResultados");
 
   limparBtn.addEventListener("click", async () => {
-    if (!isAdmin) return alert("Apenas o admin pode limpar resultados.");
+    if (!isAdmin()) return alert("Apenas o admin pode limpar resultados.");
     if (!confirm("⚠️ Tens a certeza que queres limpar todos os resultados da fase regular e estatísticas?")) return;
 
     try {

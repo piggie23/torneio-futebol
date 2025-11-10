@@ -1,15 +1,14 @@
 import { getInscritos, deleteInscrito, updateStats, supabase } from "./main.js";
-import { setupThemeToggle } from "./main.js";
+import { setupThemeToggle, setupRoleDropdown, isAdmin } from "./main.js";
 
 setupThemeToggle();
+setupRoleDropdown();
 
 document.addEventListener("DOMContentLoaded", async () => {
   const tabela = document.getElementById("tabelaInscritos");
   const tbody = tabela.querySelector("tbody");
   const adminBtn = document.getElementById("adminLogin");
   const adminMsg = document.getElementById("adminMsg");
-
-  let isAdmin = false;
 
   // ---------- FUNÇÃO DE RENDERIZAÇÃO ----------
   async function renderInscritos() {
@@ -30,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <td>${p.dias ? (Array.isArray(p.dias) ? p.dias.join(", ") : p.dias) : "—"}</td>
         <td>${p.horario || "—"}</td>
         ${
-          isAdmin
+          isAdmin()
             ? `<td class="adminOnly">
                 <button class="editar" data-id="${p.id}">✏️</button>
                 <button class="apagar" data-id="${p.id}">🗑️</button>
@@ -42,55 +41,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // ---------- LOGIN ADMIN ----------
-  if (adminBtn) {
-    adminBtn.addEventListener("click", async () => {
-      // Se já estiver em modo admin → sair
-      if (isAdmin) {
-        isAdmin = false;
-        document.body.classList.remove("admin-mode");
-        adminMsg.textContent = "Modo administrador desativado.";
-        adminBtn.textContent = "Entrar como Admin";
-        adminBtn.classList.remove("logout-admin");
-        await renderInscritos();
-        return;
-      }
-
-      // Caso contrário → tentar entrar
-      const pwd = prompt("Password de administrador:");
-      if (pwd === "admin123") {
-        isAdmin = true;
-        document.body.classList.add("admin-mode");
-        adminMsg.textContent = "Modo administrador ativado ✅";
-        adminBtn.textContent = "Sair do modo Admin";
-        adminBtn.classList.add("logout-admin");
-        await renderInscritos();
-      } else {
-        alert("Password incorreta ❌");
-      }
-    });
-  }
-
-  // ---------- ATALHO (Ctrl + A) ----------
-  document.addEventListener("keydown", async (e) => {
-    if (e.ctrlKey && e.key === "a") {
-      const pwd = prompt("Password de administrador:");
-      if (pwd === "admin123") {
-        isAdmin = true;
-        document.body.classList.add("admin-mode");
-        adminMsg.textContent = "Modo administrador ativado ✅";
-        adminBtn.textContent = "Sair do modo Admin";
-        adminBtn.classList.add("logout-admin");
-        await renderInscritos();
-      } else {
-        alert("Password incorreta ❌");
-      }
-    }
-  });
-
   // ---------- BOTÕES DE AÇÃO ----------
   tbody.addEventListener("click", async (e) => {
-    if (!isAdmin) return;
+    if (!isAdmin()) return;
     const id = e.target.dataset.id;
     if (!id) return;
 

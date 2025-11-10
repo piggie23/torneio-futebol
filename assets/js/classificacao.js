@@ -1,7 +1,8 @@
 import { getInscritos, supabase } from "./main.js";
-import { setupThemeToggle } from "./main.js";
+import { setupThemeToggle, setupRoleDropdown } from "./main.js";
 
 setupThemeToggle();
+setupRoleDropdown();
 
 document.addEventListener("DOMContentLoaded", async () => {
   const tbody = document.querySelector("#tabelaClassificacao tbody");

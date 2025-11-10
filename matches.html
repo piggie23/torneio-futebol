@@ -21,7 +21,14 @@
       <a href="classificacao.html">Classificação</a>
       <a href="brackets.html">Playoffs</a>
     </nav>
-    <button id="themeToggle" class="theme-btn">🌙</button>
+    <div class="role-wrapper">
+      <select id="roleDropdown" title="Selecionar role">
+        <option value="guest">Guest</option>
+        <option value="admin">Admin</option>
+      </select>
+      <span id="roleIcon" class="role-icon">👤</span>
+      <button id="themeToggle" class="theme-btn">🌙</button>
+    </div>
   </header>
 
   <main>
@@ -29,7 +36,6 @@
 
     <div class="controls">
       <button id="gerarMatches">Gerar Jogos</button>
-      <button id="adminLogin">Entrar como Admin</button>
       <button id="limparResultados" class="danger">Limpar Resultados</button>
       <button id="fecharEpoca" class="danger">Terminar Época Regular</button>
       <p id="adminMsg"></p>

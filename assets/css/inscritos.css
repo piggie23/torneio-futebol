@@ -113,30 +113,3 @@ body.dark-mode tr:hover {
   from { opacity: 0; transform: translateY(-3px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-/* ---------- ADMIN MODE ---------- */
-.adminOnly {
-  display: none; /* Esconde por padrão */
-}
-
-body.admin-mode .adminOnly {
-  display: table-cell; /* Mostra só quando admin estiver ativo */
-}
-
-/* ---------- MODO ADMIN ATIVO ---------- */
-
-button#adminLogin {
-  background-color: #facc15; /* amarelo */
-  color: #000;
-}
-
-#adminLogin.logout-admin {
-  background-color: #dc3545 !important; /* vermelho */
-  color: #fff;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-#adminLogin.logout-admin:hover {
-  background-color: #b02a37 !important;
-  transform: scale(1.05);
-}

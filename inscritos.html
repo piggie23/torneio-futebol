@@ -21,15 +21,18 @@
       <a href="classificacao.html">Classificação</a>
       <a href="brackets.html">Playoffs</a>
     </nav>
-    <button id="themeToggle" class="theme-btn">🌙</button>
+    <div class="role-wrapper">
+      <select id="roleDropdown" title="Selecionar role">
+        <option value="guest">Guest</option>
+        <option value="admin">Admin</option>
+      </select>
+      <span id="roleIcon" class="role-icon">👤</span>
+      <button id="themeToggle" class="theme-btn">🌙</button>
+    </div>
   </header>
 
   <main>
     <h2>Lista de Participantes</h2>
-
-    <button id="adminLogin">Entrar como Admin</button>
-    <p id="adminMsg" style="margin-top: 10px;"></p>
-
     <table id="tabelaInscritos">
       <thead>
         <tr>

@@ -233,3 +233,81 @@ export async function lockPlayoffsNavUntilFinished() {
     playoffsLink.removeAttribute("title");
   }
 }
+
+
+// ===============================
+// 👤 ROLE DROPDOWN (Guest / Admin)
+// ===============================
+export const ADMIN_PASSWORD = "admin123"; // <— podes mudar aqui
+
+export function setupRoleDropdown() {
+  const dropdown = document.getElementById("roleDropdown");
+  const icon = document.getElementById("roleIcon");
+  if (!dropdown || !icon) return;
+
+  // Aplica role guardada
+  const savedRole = sessionStorage.getItem("userRole") || "guest";
+  dropdown.value = savedRole;
+  updateRoleIcon(savedRole);
+  if (savedRole === "admin") document.body.classList.add("admin-mode");
+
+
+  // Mudança manual via dropdown
+  dropdown.addEventListener("change", () => changeRole(dropdown.value));
+
+  // Atalho Ctrl + A
+  document.addEventListener("keydown", (e) => {
+    if (e.ctrlKey && e.key.toLowerCase() === "a") {
+      e.preventDefault();
+      changeRole("admin");
+    }
+  });
+
+  function changeRole(role) {
+    if (role === "admin") {
+      const pwd = prompt("Password de administrador:");
+      if (pwd === ADMIN_PASSWORD) {
+        sessionStorage.setItem("userRole", "admin");
+        dropdown.value = "admin";
+        updateRoleIcon("admin");
+        document.body.classList.add("admin-mode");
+        alert("Modo administrador ativado ✅");
+        location.reload(); // 🔁 força reload da página
+      } else {
+        alert("Password incorreta ❌");
+        dropdown.value = "guest";
+        sessionStorage.setItem("userRole", "guest");
+        updateRoleIcon("guest");
+        document.body.classList.remove("admin-mode");
+        location.reload(); // 🔁 reload mesmo ao falhar
+      }
+    } else {
+      sessionStorage.setItem("userRole", "guest");
+      updateRoleIcon("guest");
+      document.body.classList.remove("admin-mode");
+      alert("Modo visitante ativo 👤");
+      location.reload(); 
+    }
+  }
+
+
+}
+
+function updateRoleIcon(role) {
+  const icon = document.getElementById("roleIcon");
+  if (!icon) return;
+
+  if (role === "admin") {
+    icon.textContent = "⭐"; 
+    icon.style.color = "#facc15"; 
+  } else {
+    icon.textContent = "👤";
+    icon.style.color = "var(--text-color)"; 
+  }
+}
+
+
+export function isAdmin() {
+  return sessionStorage.getItem("userRole") === "admin";
+}
+

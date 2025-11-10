@@ -321,3 +321,42 @@ h3 {
 body.dark-mode .socials p {
   color: #ddd;
 }
+
+.role-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 60px; 
+}
+
+#roleDropdown {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: var(--bg-color, #fff);
+  color: var(--text-color, #111);
+}
+
+#roleIcon {
+  font-size: 1.3rem;
+  transition: color 0.3s;
+}
+
+/* ---------- ADMIN MODE ---------- */
+.adminOnly {
+  display: none; /* Esconde por padrão */
+}
+
+body.admin-mode .adminOnly {
+  display: table-cell; 
+}
+
+body.admin-mode .adminOnly {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}

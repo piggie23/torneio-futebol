@@ -2,9 +2,10 @@
 // form.js — versão Supabase integrada (ajustada)
 // ======================================================
 
-import { saveInscrito, getInscritos, setupThemeToggle } from "./main.js";
+import { saveInscrito, getInscritos, setupThemeToggle, setupRoleDropdown } from "./main.js";
 
 setupThemeToggle();
+setupRoleDropdown();
 
 
 // ---------- Função para gerar opções de horas ----------
