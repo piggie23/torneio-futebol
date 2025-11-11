@@ -7,8 +7,6 @@ setupRoleDropdown();
 document.addEventListener("DOMContentLoaded", async () => {
   const tabela = document.getElementById("tabelaInscritos");
   const tbody = tabela.querySelector("tbody");
-  const adminBtn = document.getElementById("adminLogin");
-  const adminMsg = document.getElementById("adminMsg");
 
   // ---------- FUNÇÃO DE RENDERIZAÇÃO ----------
   async function renderInscritos() {

@@ -38,6 +38,18 @@ header h1 {
   margin: 0;
 }
 
+body.home-page header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #c29d00;
+  letter-spacing: 0.6px;
+  text-transform: capitalize;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  margin: 0;
+}
+
 /* ===== MODO ESCURO ===== */
 body.dark-mode header h1 {
   color: #93c5fd; /* azul suave claro */
