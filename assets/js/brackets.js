@@ -202,7 +202,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (error && error.code !== "PGRST116") console.error(error);
     bracketsData = data?.data || { rounds: [] };
     renderBrackets();
-    maybeTriggerChampion();
   }
 
   await loadBrackets();
@@ -359,6 +358,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // só mostra se ainda não foi mostrado nesta sessão
     if (championShown) return;
+
+    // só dispara automaticamente quando o trigger vem de um resultado finalizado
+    if (triggeredBy === "render") return;
 
     showChampionDialog(winner);
     championShown = true;
