@@ -359,7 +359,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // só mostra se ainda não foi mostrado nesta sessão
     if (championShown) return;
 
-    // só dispara automaticamente quando o trigger vem de um resultado finalizado
     if (triggeredBy === "render") return;
 
     showChampionDialog(winner);
