@@ -202,6 +202,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (error && error.code !== "PGRST116") console.error(error);
     bracketsData = data?.data || { rounds: [] };
     renderBrackets();
+    maybeTriggerChampion();
   }
 
   await loadBrackets();
