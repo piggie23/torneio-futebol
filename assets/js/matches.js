@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <form method="dialog" class="fim-epoca-form">
           <h2>🏁 Época Regular Terminada</h2>
           <p>A fase regular terminou. Apenas o administrador pode reiniciar a época.</p>
-          <button id="reiniciarEpocaBtn" type="button">🔄 Reiniciar Época</button>
+          <button class="adminOnly" id="reiniciarEpocaBtn" type="button">🔄 Reiniciar Época</button>
         </form>
       `;
       document.body.appendChild(dialog);
