@@ -47,6 +47,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       (b.gm - a.gm)
     );
 
+    let q = 8;
+    if (ranking.length < 8) q = ranking.length >= 4 ? 4 : 2;
+
     ranking.forEach((r, i) => {
       const tr = document.createElement("tr");
 
@@ -54,8 +57,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       else if (i === 1) tr.style.background = "rgba(192,192,192,0.15)";     // prata
       else if (i === 2) tr.style.background = "rgba(205,127,50,0.15)";      // bronze
 
+     
+
       tr.innerHTML = `
-        <td>${i + 1}</td>
+        <td class="pos-cell">
+          <span class="pos-number">${i + 1}</span>
+          <span class="qualificado-icon">${i < q ? "★" : ""}</span>
+        </td>
         <td>${r.username}</td>
         <td>${r.equipa}</td>
         <td>${r.jj}</td>
@@ -72,6 +80,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   await renderClassificacao();
+
+  document.getElementById("tabelaWrapper")?.insertAdjacentHTML("beforeend", `
+    <div class="legenda-classificacao">
+      <span class="legenda-star">★</span> Qualificado para os Playoffs
+    </div>
+  `);
 
   // Atualiza quando muda "inscritos" (stats por jogador)
   supabase

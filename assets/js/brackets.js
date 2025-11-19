@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("brackets");
   const btnReset = document.getElementById("resetTorneio");
   const controls = document.querySelector(".controls");
+  const cancelResultBtn = document.getElementById("cancelResultBtn");
 
   let editingMatch = null;
   let bracketsData = { rounds: [] };
@@ -401,7 +402,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-  function showChampionDialog(winnerName) {
+  function showChampionDialog(winnerName, timestamp) {
     if (document.getElementById("championDialog")?.open) return;
 
     currentChampion = winnerName;
@@ -502,7 +503,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <canvas id="confettiCanvas"></canvas>
         <div class="champion-card">
           <h2>🏆 Parabéns, <span class="champion-name">${winnerName}</span>!</h2>
-          <p>És o grande campeão do <strong>Estamine</strong>! Ganhaste Merda nenhuma.</p>
+          <p>És o grande campeão do <strong>Estaminé</strong>! Ganhaste Merda nenhuma.</p>
           <div class="champion-actions">
             <button class="champion-btn btn-ok">Fechar</button>
           </div>
@@ -624,6 +625,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
   }
+
+  // Fechar dialog ao clicar em "Cancelar"
+  cancelResultBtn?.addEventListener("click", () => {
+    dialog.close();
+    editingMatch = null; // opcional, só para limpar o estado
+  });
+
 
   // ---------- GUARDAR RESULTADO ----------
   formDialog?.addEventListener("submit", async (e) => {

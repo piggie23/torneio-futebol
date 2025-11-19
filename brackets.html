@@ -44,13 +44,13 @@
   </main>
 
   <dialog id="resultDialog">
-    <form method="dialog" id="resultForm">
+    <form id="resultForm">
       <h3>Editar Resultado</h3>
       <p id="matchNames"></p>
       <input type="text" id="newResult" placeholder="Ex: 2-1" required>
       <div class="dialog-buttons">
-        <button value="cancel">Cancelar</button>
-        <button id="saveResultBtn" value="confirm">Guardar</button>
+        <button type="button" id="cancelResultBtn">Cancelar</button>
+        <button type="submit" id="saveResultBtn">Guardar</button>
       </div>
     </form>
   </dialog>

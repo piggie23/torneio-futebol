@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const dialog = document.getElementById("resultDialog");
   const homeInput = document.getElementById("homeScore");
   const awayInput = document.getElementById("awayScore");
+    const cancelBtn = document.getElementById("cancelResultBtn");
   let selectedMatch = null;
 
 
@@ -174,6 +175,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     dialog.showModal();
   });
+
+  cancelBtn?.addEventListener("click", () => {
+    dialog.close();
+  });
+
 
   // ---------- LIMPAR RESULTADOS ----------
   const limparBtn = document.getElementById("limparResultados");
@@ -355,6 +361,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         .neq("id", 0);
 
       await supabase.from("torneio_estado").update({ fase_regular_concluida: false }).neq("id", 0);
+
+      await supabase.from("brackets").delete().neq("id", 0);
 
       alert("✅ Época reiniciada com sucesso!");
       dialog.removeAttribute("open");

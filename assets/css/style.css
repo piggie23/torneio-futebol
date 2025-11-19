@@ -382,3 +382,51 @@ body.admin-mode .adminOnly {
   gap: 8px;
   white-space: nowrap;
 }
+
+
+/* Estrela do jogador qualificado */
+.qualificado-icon {
+  color: #007bff;
+  font-size: 0.9rem;
+  margin-left: 4px;
+  display: inline-block;
+  width: 14px;
+  text-align: left;
+}
+
+body.dark-mode .qualificado-icon {
+  color: #fa15d4;
+}
+
+/* Cores das linhas de qualificação */
+.qualificado-row {
+  background: #e8ffe8 !important;
+}
+body.dark-mode .qualificado-row {
+  background: rgba(34, 197, 94, 0.08) !important;
+}
+
+/* Legenda */
+.legenda-classificacao {
+  margin-top: 25px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legenda-star {
+  color: #007bff;
+  font-size: 1rem;
+}
+
+.dark-mode .legenda-star {
+  color: #fd00d3;
+}
+
+body.dark-mode .legenda-classificacao {
+  color: #ddd;
+}
+
+
