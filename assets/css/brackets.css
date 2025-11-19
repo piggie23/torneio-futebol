@@ -59,13 +59,10 @@ button:hover {
   transform: translateY(-2px);
 }
 
-button.danger {
-  background-color: #dc3545;
+button#resetTorneio {
+  background-color: #f20000; /* azul */
 }
 
-button.danger:hover {
-  background-color: #b02a37;
-}
 
 /* ---------- BRACKETS TEMPLATE ---------- */
 .tournament-bracket {

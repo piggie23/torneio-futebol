@@ -15,7 +15,6 @@ import {
 setupThemeToggle();
 setupRoleDropdown();
 
-
 document.addEventListener("DOMContentLoaded", async () => {
   const btnGerar = document.getElementById("gerarBrackets");
   const dialog = document.getElementById("resultDialog");
@@ -28,12 +27,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let editingMatch = null;
   let bracketsData = { rounds: [] };
+  let currentChampion = null; 
+
+  const CHAMPION_BG = "assets/img/winner.png";
 
   // ---------- VERIFICAR ESTADO DO TORNEIO ----------
   const faseTerminada = await getTournamentState();
 
   if (!faseTerminada) {
-    // 🔒 Esconder controlos e mostrar mensagem central
     if (controls) controls.style.display = "none";
 
     container.innerHTML = `
@@ -96,7 +97,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         background: #1d4ed8;
       }
 
-      /* dark mode */
       body.dark-mode .mensagem {
         background: rgba(34,34,34,0.9);
         color: #eee;
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     `;
     document.head.appendChild(css);
-    return; // Sai do script — não carrega brackets nem botões
+    return;
   }
 
   // ---------- RESET BRACKETS ----------
@@ -126,7 +126,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (existing) await supabase.from("brackets").delete().eq("id", existing.id);
 
+    localStorage.removeItem("championDismissed");
+
     bracketsData = { rounds: [] };
+    currentChampion = null;
     renderBrackets();
     alert("✅ Brackets apagados com sucesso!");
   });
@@ -181,11 +184,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     bracketsData = { rounds };
+    currentChampion = null;
 
-    await supabase.from("brackets").delete().neq("id", "");
-    const { error } = await supabase
+    // não apagar a tabela toda, apenas atualiza/cria o único registo
+    const { data: existing } = await supabase
       .from("brackets")
-      .insert([{ data: bracketsData }]);
+      .select("id")
+      .limit(1)
+      .maybeSingle();
+
+    let error;
+    if (existing) {
+      ({ error } = await supabase
+        .from("brackets")
+        .update({ data: bracketsData, campeao: null })
+        .eq("id", existing.id));
+    } else {
+      ({ error } = await supabase
+        .from("brackets")
+        .insert([{ data: bracketsData, campeao: null }]));
+    }
+
     if (error) {
       console.error(error);
       alert("❌ Erro ao guardar brackets!");
@@ -198,10 +217,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // ---------- CARREGAR E REALTIME ----------
   async function loadBrackets() {
-    const { data, error } = await supabase.from("brackets").select("*").single();
-    if (error && error.code !== "PGRST116") console.error(error);
+    const { data, error } = await supabase
+      .from("brackets")
+      .select("id, data, campeao, campeao_at")
+      .single();
+
+    if (error && error.code !== "PGRST116") {
+      console.error(error);
+    }
+
     bracketsData = data?.data || { rounds: [] };
     renderBrackets();
+
+    if (data?.campeao) {
+      handleChampionFromDB(data.campeao, data.campeao_at);
+    }
   }
 
   await loadBrackets();
@@ -209,8 +239,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   // ---------- SUBSCRIÇÃO REALTIME ----------
   supabase
     .channel("brackets-live")
-    .on("postgres_changes", { event: "*", schema: "public", table: "brackets" }, loadBrackets)
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "brackets" },
+      async (payload) => {
+        // Recarregar brackets da DB
+        await loadBrackets();
+
+        // Verificar campeão atualizado
+        const { data } = await supabase
+          .from("brackets")
+          .select("campeao, campeao_at")
+          .limit(1)
+          .maybeSingle();
+
+        if (data?.campeao) {
+          handleChampionFromDB(data.campeao, data.campeao_at); 
+        }
+      }
+    )
     .subscribe();
+
 
   // ---------- FUNÇÕES AUXILIARES ----------
   function calcularVencedor(resultado) {
@@ -336,37 +385,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     setTimeout(drawConnectors, 80);
   }
 
+  // ========= Campeão: popup com animação e fundo ======
 
-  // ========= Campeão: popup com animação e fundo =========
-  let championShown = false; // <- controla se já mostramos durante esta sessão
-  const CHAMPION_BG = "assets/img/winner.png";
+  function handleChampionFromDB(campeao, timestamp) {
+    if (!campeao || !timestamp) return;
 
-  function getFinalWinner(data) {
-    if (!data?.rounds?.length) return null;
-    const lastRound = data.rounds[data.rounds.length - 1];
-    if (!lastRound?.length) return null;
-    const finalMatch = lastRound[0];
-    if (finalMatch?.vencedor && typeof finalMatch.resultado === "string" && finalMatch.resultado.includes("-")) {
-      return finalMatch.vencedor;
-    }
-    return null;
+    const key = `championDismissed_${timestamp}`;
+
+    // se já viu este popup, não mostra mais
+    if (localStorage.getItem(key)) return;
+
+    currentChampion = campeao;
+    showChampionDialog(campeao, timestamp);
   }
 
-  function maybeTriggerChampion(triggeredBy = "system") {
-    const winner = getFinalWinner(bracketsData);
-    if (!winner) return;
 
-    // só mostra se ainda não foi mostrado nesta sessão
-    if (championShown) return;
-
-    if (triggeredBy === "render") return;
-
-    showChampionDialog(winner);
-    championShown = true;
-  }
 
   function showChampionDialog(winnerName) {
     if (document.getElementById("championDialog")?.open) return;
+
+    currentChampion = winnerName;
 
     const css = document.getElementById("champion-style") || document.createElement("style");
     css.id = "champion-style";
@@ -474,15 +512,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.body.appendChild(dialog);
 
     dialog.querySelector(".btn-ok").addEventListener("click", () => dialog.close());
+
+    dialog.addEventListener("close", () => {
+      if (timestamp) {
+        localStorage.setItem(`championDismissed_${timestamp}`, "1");
+      }
+    });
+
     dialog.showModal();
-    startConfetti(dialog.querySelector("#confettiCanvas"));
+    startConfetti(dialog.querySelector("#confettiCanvas"), dialog);
   }
 
   function startConfetti(canvas, dialog) {
     const ctx = canvas.getContext("2d");
     const DPR = window.devicePixelRatio || 1;
 
-    // garantir que o canvas cobre o viewport inteiro
     const resize = () => {
       canvas.width  = Math.floor(window.innerWidth  * DPR);
       canvas.height = Math.floor(window.innerHeight * DPR);
@@ -490,14 +534,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
     resize();
 
-    const W = () => canvas.width  / DPR;
+    const W = () => canvas.width / DPR;
     const H = () => canvas.height / DPR;
 
     const colors = ["#FFD166","#06D6A0","#EF476F","#118AB2","#FCA5A5","#34D399","#F59E0B","#60A5FA"];
 
     const pieces = Array.from({ length: 160 }, () => ({
-      x: Math.random() * W(),          
-      y: Math.random() * -H(),         
+      x: Math.random() * W(),
+      y: Math.random() * -H(),
       size: 6 + Math.random() * 8,
       rot: Math.random() * Math.PI,
       velX: -0.6 + Math.random() * 1.2,
@@ -510,7 +554,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     function animate() {
       if (!running) return;
 
-      // limpar com dimensão real
       ctx.clearRect(0, 0, W(), H());
 
       for (const p of pieces) {
@@ -518,7 +561,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         p.y += p.velY;
         p.rot += 0.05;
 
-        // reaparecer quando sai do fundo ou pelas laterais
         if (p.y > H() + 20) { p.y = -20; p.x = Math.random() * W(); }
         if (p.x < -20) p.x = W() + 20;
         if (p.x > W() + 20) p.x = -20;
@@ -536,18 +578,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     requestAnimationFrame(animate);
 
-    // parar quando o dialog fecha
     dialog.addEventListener("close", () => (running = false));
     window.addEventListener("resize", () => {
       resize();
-      // opcional: reposicionar algumas peças para preencher novas áreas
       for (const p of pieces) {
         if (p.x > W()) p.x = Math.random() * W();
         if (p.y > H()) p.y = Math.random() * H();
       }
     });
   }
-
 
   // ---------- DESENHAR LINHAS ----------
   function drawConnectors() {
@@ -600,6 +639,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     match.vencedor =
       vencedorNum === 1 ? match.j1 : vencedorNum === 2 ? match.j2 : null;
 
+    // é a final se for o último round e o primeiro jogo desse round
+    const isFinal =
+      roundIndex === bracketsData.rounds.length - 1 && matchIndex === 0;
+
+    // PROPAGAR VENCEDOR PARA RONDA SEGUINTE, SE NÃO FOR FINAL
     if (roundIndex < bracketsData.rounds.length - 1 && match.vencedor) {
       const nextRound = bracketsData.rounds[roundIndex + 1];
       const nextIndex = Math.floor(matchIndex / 2);
@@ -609,22 +653,44 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
+    // LER REGISTO EXISTENTE
     const { data: existing } = await supabase
       .from("brackets")
-      .select("id")
+      .select("id, campeao")
       .limit(1)
       .maybeSingle();
 
+    let novoCampeao = existing?.campeao || null;
+    let campeaoAt = existing?.campeao_at || null;
+
+
+    if (isFinal && match.vencedor) {
+      novoCampeao = match.vencedor; // guarda campeão na coluna
+      campeaoAt = new Date().toISOString();
+    }
+
+    // GUARDAR BRACKETS + CAMPEÃO
     if (existing)
       await supabase
         .from("brackets")
-        .update({ data: bracketsData })
+        .update({
+            data: bracketsData,
+            campeao: novoCampeao,
+            campeao_at: campeaoAt
+        })
         .eq("id", existing.id);
-    else await supabase.from("brackets").insert([{ data: bracketsData }]);
+    else
+      await supabase
+        .from("brackets")
+        .insert([{ data: bracketsData, campeao: novoCampeao, campeao_at: campeaoAt }])
 
     dialog.close();
     renderBrackets();
-    maybeTriggerChampion("final");
+
+    // Só depois de tudo gravado é que mostramos popup localmente
+    if (isFinal && match.vencedor) {
+      handleChampionFromDB(match.vencedor, campeaoAt);
+    }
   });
 
   loadBrackets();
